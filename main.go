@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-
 	"github.com/ArushiMadhesiya/go-fiber-postgres/models"
 	"github.com/ArushiMadhesiya/go-fiber-postgres/storage"
 	"github.com/gofiber/fiber/v2"
@@ -128,12 +127,13 @@ func main() {
 		SSLMode:  os.Getenv("DB_SSLMODE"),
 		DBName:   os.Getenv("DB_NAME"),
 	}
-
+	//connection set up and db acheived 
 	db, err := storage.NewConnection(config)
 
 	if err != nil {
 		log.Fatal("could not load the database")
 	}
+	// model taken, to create table in the db, migrating db actually means creating db
 	err = models.MigrateBooks(db)
 	if err != nil {
 		log.Fatal("could not migrate db")
